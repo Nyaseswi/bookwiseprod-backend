@@ -1,30 +1,33 @@
 const mongoose = require('mongoose');
-// importing the package exression- session 
 const session = require('express-session');
-
-// importing the package npm i connect-mongodb-session and assigning above session here as function 
 const MongoDBStore = require('connect-mongodb-session')(session);
+const dotenv = require('dotenv');
 
-// storing the session in mongodb 
+// Load environment variables from .env file
+dotenv.config();
+
+// Get MongoDB URI from environment variable
+const mongoURI = process.env.MONGODB_URI;
+const collectionName = process.env.COLLECTION_NAME;
+const jwtSecret = process.env.JWT_SECRET;
+
+// Define MongoDB store
 const store = new MongoDBStore({
-    uri:  "mongodb+srv://abcd:1234@cluster0.b3kjian.mongodb.net/bookWise?retryWrites=true&w=majority",
-    collection: 'mySession',
-    
-})
+    uri: mongoURI,
+    collection: collectionName,
+});
 
-// with help of middleware register the express session, we created a session here
-// to store the created session in Mongodb we need package npm i connect-mongodb-session
+// Express session middleware
 const required_session = session({
-    secret:'This is a secret',
-    resave:false,
-    saveUninitialized:true,
+    secret: jwtSecret,
+    resave: false,
+    saveUninitialized: true,
     store: store
-})
+});
 
-
-mongoose.connect(
-    "mongodb+srv://abcd:1234@cluster0.b3kjian.mongodb.net/bookWise?retryWrites=true&w=majority"
-)
-.then(() => console.log('Mongodb Connection success'));
+// Connect to MongoDB using the URI from .env
+mongoose.connect(mongoURI)
+    .then(() => console.log('Mongodb Connection success'))
+    .catch(err => console.error('MongoDB connection error:', err));
 
 module.exports = required_session;
