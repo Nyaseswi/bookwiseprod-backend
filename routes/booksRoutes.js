@@ -3,6 +3,7 @@ const bookModel = require('../models/booksModel');
 
 // POST REQUEST http://localhost:1000/api/v1/add
 router.post('/add', async(req, res) => {
+    console.log('Adding books');
     try{
         const data = req.body;
         const newBook = new bookModel(data);
@@ -16,6 +17,7 @@ router.post('/add', async(req, res) => {
 
 // GET REQUEST http://localhost:1000/api/v1/getBooks
 router.get('/getBooks', async(req,res) =>{
+    console.log('getting all books');
     let books;
     try{
         books = await bookModel.find();
@@ -27,6 +29,7 @@ router.get('/getBooks', async(req,res) =>{
 
 // GET REQUEST WITH ID http://localhost:1000/api/v1/getBooks/65ad33c3c4d068e0516cb951
 router.get('/getBooks/:id', async (req,res) => {
+    console.log('getting books by id');
     let book;
     const id = req.params.id;
     try{

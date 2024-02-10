@@ -1,6 +1,10 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+const dotenv = require('dotenv');
+
+// Load environment variables from .env file
+dotenv.config();
 // importing the package exression- session 
 // const session = require('express-session');
 
@@ -17,6 +21,6 @@ app.use('/api/users/',userRoute);
 
 
 
-app.listen(1000,()=>{
+app.listen( process.env.HTTP_PORT,()=>{
     console.log('Server Started Successfully');
 });
