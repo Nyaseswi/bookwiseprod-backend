@@ -1,0 +1,7 @@
+for authentication we need package called express-session command = npm i express-session
+in main file app.js imported express-session package with variabl name session
+to register the express session we created a store 
+to store the created session in Mongodb we need package npm i connect-mongodb-session
+importing the package npm i connect-mongodb-session and assigning above session here as function
+storing the session in mongodb  
+in mongodb sessions created 
