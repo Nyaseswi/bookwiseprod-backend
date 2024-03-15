@@ -28,7 +28,7 @@ userRouter.post('/register', async (req, res) => {
 
         await newUser.save();
         // Generate JWT token with 7 days validity
-        const token = jwt.sign({ userId: newUser._id, email: newUser.email, role: newUser.role }, 'your_secret_key', { expiresIn: '7d' });
+        const token = jwt.sign({ userId: newUser._id, email: newUser.email, role: newUser.role }, process.env.JWT_SECRET, { expiresIn: '7d' });
 
         res.status(200).json({ message: "User added successfully", token });
     } catch (error) {
@@ -62,7 +62,7 @@ userRouter.post('/login', async (req, res) => {
         }
 
         // Password is correct, generate JWT token with 7 days validity
-        const token = jwt.sign({ userId: user._id, email: user.email, role: user.role }, 'your_secret_key', { expiresIn: '7d' });
+        const token = jwt.sign({ userId: user._id, email: user.email, role: user.role }, process.env.JWT_SECRET, { expiresIn: '7d' });
 
         res.status(200).json({ message: "Login successful", token });
     } catch (error) {
@@ -86,7 +86,7 @@ userRouter.get('/userDetails', async (req, res) => {
     try {
         // Decode the JWT token
         // console.log("received_token=>" + token);
-        const decodedToken = jwt.verify(token, 'your_secret_key');
+        const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
 
         // Fetch user details from the database using the decoded email
         const user = await User.findOne({ email: decodedToken.email });
