@@ -15,12 +15,12 @@ const mongoConn = require('./connection/conn');
 app.use(cors());
 app.use(express.json());
 app.use(mongoConn);
-app.use(express.urlencoded({extended: true}))
-app.use('/api/v1/',bookRoute);
-app.use('/api/users/',userRoute);
+app.use(express.urlencoded({ extended: true }))
+app.use('/api/v1/', bookRoute);
+app.use('/api/users/', userRoute);
 
 
 
-app.listen( process.env.HTTP_PORT,()=>{
-    console.log('Server Started Successfully');
+app.listen(process.env.HTTP_PORT, () => {
+    console.log('Server Started Successfully on port number:', process.env.HTTP_PORT);
 });
